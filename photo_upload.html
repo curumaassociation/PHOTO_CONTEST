@@ -6,41 +6,105 @@
   <title>Upload Your Photo – CURUMA Photography Contest</title>
   <link rel="stylesheet" href="/style.css"/>
   <style>
+    /* Main Styles */
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f5f5f5;
+      background: #fafafa;
+      color: #333;
     }
+    
     header {
       text-align: center;
       padding: 20px;
       background: white;
-      border-bottom: 1px solid #ccc;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+    
     header img {
-      max-height: 60px;
+      max-height: 80px;
+      margin-bottom: 10px;
     }
+    
+    h1 {
+      color: #d62976;
+      margin: 5px 0;
+      font-size: 1.8rem;
+    }
+    
     main {
       padding: 20px;
       max-width: 800px;
-      margin: auto;
+      margin: 0 auto 40px;
     }
+    
+    /* Form Styles */
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    
+    .file-hint {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    /* Instagram Preview Section */
     .instagram-guide {
-      background: #f8f9fa;
+      background: linear-gradient(to right, #fdf497, #fdf497, #fd5949, #d6249f, #285AEB);
+      color: white;
       padding: 15px;
       border-radius: 8px;
-      margin: 20px 0;
-      border-left: 4px solid #d62976;
+      margin: 25px 0;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .instagram-guide::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 0;
+    }
+    
+    .instagram-guide h3 {
+      position: relative;
+      z-index: 1;
+      margin-top: 0;
+    }
+    
+    .instagram-guide p {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0;
+    }
+    
     .preview-container {
       display: flex;
       justify-content: center;
-      margin: 20px 0;
+      margin: 25px 0;
     }
+    
     .instagram-preview {
       width: 320px;
       height: 320px;
@@ -51,79 +115,164 @@
       align-items: center;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    
     #instagramPreview {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
     }
+    
     .preview-caption {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0,0,0,0.7);
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
       color: white;
-      padding: 8px;
+      padding: 12px;
       font-size: 14px;
+      line-height: 1.4;
     }
+    
+    .ratio-warning {
+      color: #d62828;
+      font-weight: bold;
+      margin-top: 8px;
+      display: none;
+    }
+    
+    /* Buttons */
     .form-actions {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      margin-top: 30px;
+      gap: 15px;
     }
+    
     .button {
-      padding: 10px 20px;
+      padding: 12px 25px;
       background: #d62976;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+      flex: 1;
+      transition: all 0.3s ease;
     }
+    
+    .button:hover {
+      background: #b51a60;
+      transform: translateY(-2px);
+    }
+    
     .button.secondary {
-      background: #ccc;
-      color: #333;
+      background: #6c757d;
     }
+    
+    .button.secondary:hover {
+      background: #5a6268;
+    }
+    
+    /* Checkbox */
     .checkbox label {
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
-    .ratio-warning {
-      color: #d62828;
-      font-weight: bold;
-      margin-top: 5px;
-    }
+    
+    /* Modal */
     #confirmationModal {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
     }
+    
     .modal-content {
       background: white;
       padding: 30px;
-      border-radius: 8px;
+      border-radius: 12px;
       width: 90%;
       max-width: 500px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      animation: modalFadeIn 0.3s ease;
     }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
     .whatsapp-note {
-      background: #fff8e1;
-      padding: 10px;
-      margin-top: 15px;
-      font-size: 14px;
+      background: #25D366;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .whatsapp-note::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.1);
+    }
+    
+    .whatsapp-note h3 {
+      margin-top: 0;
+      position: relative;
+    }
+    
+    .whatsapp-note ol {
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .whatsapp-note li {
+      margin-bottom: 8px;
+    }
+    
+    /* Footer */
     footer {
       text-align: center;
-      padding: 10px;
+      padding: 20px;
+      background: #333;
+      color: white;
       font-size: 14px;
-      background: #f1f1f1;
-      color: #666;
-      margin-top: 30px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 600px) {
+      .instagram-preview {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+      
+      .button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -131,69 +280,63 @@
   <header>
     <img src="/Images/curuma_logo.png" alt="CURUMA Logo" />
     <h1>Photo & Payment Upload</h1>
-    <p>Step 2 of 2</p>
+    <p>Step 2 of 2: Finalize your submission</p>
   </header>
 
   <main>
-    <div class="form-actions">
-      <a href="/gallery.html" class="button secondary">📷 View Entries</a>
-      <a href="/carousel.html" class="button secondary">🖼️ View Carousel</a>
-      <a href="/registration.html" class="button secondary">🔙 Registration Page</a>
-    </div>
-
     <div class="instagram-guide">
-      <h3>Instagram Upload Guidelines</h3>
-      <p>Your photo will appear on <strong>@curaj_photocontest2025</strong> exactly as shown below.</p>
-      <p>For best results, upload a square image (1:1 ratio) between 1080x1080 and 2048x2048 pixels.</p>
+      <h3>📸 Instagram Post Preview</h3>
+      <p>This is exactly how your photo will appear on @curaj_photocontest2025</p>
     </div>
 
-    <form id="uploadForm" action="/submit" method="POST" enctype="multipart/form-data">
+    <form id="uploadForm">
       <!-- Hidden Fields -->
-      <input type="hidden" id="hiddenName" name="name" />
-      <input type="hidden" id="hiddenEnrollment" name="enrollment" />
-      <input type="hidden" id="hiddenDepartment" name="department" />
-      <input type="hidden" id="hiddenPhone" name="phone" />
-      <input type="hidden" id="hiddenState" name="state" />
-      <input type="hidden" id="hiddenCategory" name="category" />
-      <input type="hidden" id="hiddenInstagram" name="instagram" />
-      <input type="hidden" id="hiddenCuraj" name="curaj" />
-      <input type="hidden" id="hiddenWhy" name="why" />
-      <input type="hidden" id="hiddenPaymentCode" name="paymentCode" />
+      <input type="hidden" id="hiddenName" name="name">
+      <input type="hidden" id="hiddenEnrollment" name="enrollment">
+      <input type="hidden" id="hiddenDepartment" name="department">
+      <input type="hidden" id="hiddenPhone" name="phone">
+      <input type="hidden" id="hiddenState" name="state">
+      <input type="hidden" id="hiddenCategory" name="category">
+      <input type="hidden" id="hiddenInstagram" name="instagram">
+      <input type="hidden" id="hiddenCuraj" name="curaj">
+      <input type="hidden" id="hiddenWhy" name="why">
+      <input type="hidden" id="hiddenPaymentCode" name="paymentCode">
 
       <div class="form-group">
-        <label for="photo">Upload Your Photo (Max 5MB):</label>
+        <label for="photo">Upload Your Contest Photo (Max 5MB)</label>
         <input type="file" id="photo" name="photo" accept="image/*" required />
-        <p class="file-hint">Accepted formats: JPG, PNG (Square preferred)</p>
-        <p class="ratio-warning" id="ratioWarning" style="display:none;"></p>
+        <p class="file-hint">Formats: JPG/PNG (Square 1:1 ratio recommended, 1080x1080 to 2048x2048 pixels)</p>
+        <p class="ratio-warning" id="ratioWarning"></p>
 
         <div class="preview-container">
           <div class="instagram-preview">
-            <img id="instagramPreview" src="#" alt="Instagram Preview">
+            <img id="instagramPreview" src="/Images/upload_placeholder.png" alt="Instagram Preview">
             <div class="preview-caption" id="previewCaption"></div>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="caption">Caption / Title:</label>
-        <input type="text" id="caption" name="caption" required />
+        <label for="caption">Photo Caption/Title</label>
+        <input type="text" id="caption" name="caption" placeholder="Give your photo a title..." required />
+        <p class="file-hint">This will appear below your photo on Instagram</p>
       </div>
 
       <div class="form-group">
-        <label for="screenshot">Upload Payment Receipt (Max 5MB):</label>
+        <label for="screenshot">Payment Receipt Screenshot (Max 5MB)</label>
         <input type="file" id="screenshot" name="screenshot" accept="image/*" required />
-        <p class="file-hint">Clear screenshot showing 12-digit UPI transaction ID and ₹30 payment.</p>
+        <p class="file-hint">Must clearly show: 12-digit UPI Transaction ID and ₹30 payment</p>
       </div>
 
       <div class="form-group checkbox">
         <label>
           <input type="checkbox" name="consent" required />
-          I confirm this is my original work and I accept the contest rules.
+          I confirm this is my original work and I accept all contest rules
         </label>
       </div>
 
       <div class="form-actions">
-        <a href="/registration.html" class="button secondary">Back</a>
+        <a href="/registration.html" class="button secondary">← Back to Registration</a>
         <button type="button" class="button" id="submitButton">Submit Entry</button>
       </div>
     </form>
@@ -202,20 +345,22 @@
   <!-- Confirmation Modal -->
   <div id="confirmationModal">
     <div class="modal-content">
-      <h2>Confirm Submission</h2>
-      <p>Your photo entry will be sent to CURUMA organizers via WhatsApp.</p>
-      <div id="submissionSummary"></div>
+      <h2>Ready to Submit?</h2>
+      <p>Your entry will be sent to CURUMA organizers via WhatsApp.</p>
+      
+      <div id="submissionSummary" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;"></div>
 
       <div class="whatsapp-note">
-        <h3>Important Submission Note</h3>
+        <h3>📱 WhatsApp Submission Instructions</h3>
         <ol>
-          <li>Send the pre-filled message that appears</li>
-          <li>Manually attach your photo</li>
-          <li>Then hit send</li>
+          <li><strong>Send</strong> the pre-filled message that appears</li>
+          <li><strong>Attach</strong> your photo in the next message</li>
+          <li><strong>Complete</strong> by sending both messages</li>
         </ol>
+        <p style="margin-bottom: 0; font-size: 13px;">Note: You must manually attach your photo after sending the details</p>
       </div>
 
-      <div class="form-actions">
+      <div class="form-actions" style="margin-top: 25px;">
         <button id="cancelButton" class="button secondary">Cancel</button>
         <button id="confirmSendButton" class="button">Send via WhatsApp</button>
       </div>
@@ -227,34 +372,50 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load registration data from URL
       const urlParams = new URLSearchParams(window.location.search);
-      const hiddenFields = [
+      const fields = [
         'name', 'enrollment', 'department', 'phone', 'state',
         'category', 'instagram', 'curaj', 'why', 'paymentCode'
       ];
-      hiddenFields.forEach(field => {
-        document.getElementById('hidden' + field.charAt(0).toUpperCase() + field.slice(1)).value = urlParams.get(field) || '';
+      
+      fields.forEach(field => {
+        const element = document.getElementById(`hidden${field.charAt(0).toUpperCase() + field.slice(1)}`);
+        if (element) element.value = urlParams.get(field) || '';
       });
 
-      document.getElementById('photo').addEventListener('change', function (e) {
+      // Photo Preview with Instagram Styling
+      const photoInput = document.getElementById('photo');
+      const instagramPreview = document.getElementById('instagramPreview');
+      const previewCaption = document.getElementById('previewCaption');
+      const ratioWarning = document.getElementById('ratioWarning');
+      
+      photoInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          const preview = document.getElementById('instagramPreview');
-          preview.src = event.target.result;
+        // Check file size
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File size exceeds 5MB limit');
+          this.value = '';
+          return;
+        }
 
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          instagramPreview.src = event.target.result;
+          
+          // Check image dimensions
           const img = new Image();
-          img.onload = function () {
+          img.onload = function() {
             const ratio = img.width / img.height;
-            const warning = document.getElementById('ratioWarning');
-            if (ratio < 0.8 || ratio > 1.2) {
-              warning.textContent = `Note: Image ratio is ${img.width}x${img.height}. Square images look best on Instagram.`;
-              warning.style.display = 'block';
+            
+            if (ratio < 0.9 || ratio > 1.1) {
+              ratioWarning.textContent = `ℹ️ Your image is ${img.width}×${img.height} (ratio ${ratio.toFixed(2)}:1). Square images (1:1) display best on Instagram.`;
+              ratioWarning.style.display = 'block';
             } else {
-              warning.style.display = 'none';
+              ratioWarning.style.display = 'none';
             }
           };
           img.src = event.target.result;
@@ -262,23 +423,32 @@
         reader.readAsDataURL(file);
       });
 
-      document.getElementById('caption').addEventListener('input', function () {
-        document.getElementById('previewCaption').textContent = this.value;
+      // Update caption in real-time
+      document.getElementById('caption').addEventListener('input', function() {
+        previewCaption.textContent = this.value;
       });
 
-      document.getElementById('submitButton').addEventListener('click', function () {
+      // Submit Button Handler
+      document.getElementById('submitButton').addEventListener('click', function() {
         if (!document.getElementById('uploadForm').checkValidity()) {
           alert('Please complete all required fields');
           return;
         }
+        
+        if (!photoInput.files[0]) {
+          alert('Please upload your contest photo');
+          return;
+        }
+        
         showConfirmationModal();
       });
 
-      document.getElementById('cancelButton').addEventListener('click', function () {
+      // Modal Handlers
+      document.getElementById('cancelButton').addEventListener('click', function() {
         document.getElementById('confirmationModal').style.display = 'none';
       });
 
-      document.getElementById('confirmSendButton').addEventListener('click', function () {
+      document.getElementById('confirmSendButton').addEventListener('click', function() {
         sendToWhatsApp();
       });
 
@@ -286,7 +456,9 @@
         const summary = `
           <p><strong>Name:</strong> ${document.getElementById('hiddenName').value}</p>
           <p><strong>Enrollment:</strong> ${document.getElementById('hiddenEnrollment').value}</p>
-          <p><strong>Caption:</strong> ${document.getElementById('caption').value}</p>
+          <p><strong>Department:</strong> ${document.getElementById('hiddenDepartment').value}</p>
+          <p><strong>Instagram:</strong> ${document.getElementById('hiddenInstagram').value}</p>
+          <p><strong>Caption:</strong> "${document.getElementById('caption').value}"</p>
           <p><strong>Payment Code:</strong> ${document.getElementById('hiddenPaymentCode').value}</p>
         `;
         document.getElementById('submissionSummary').innerHTML = summary;
@@ -294,29 +466,38 @@
       }
 
       function sendToWhatsApp() {
-        const message = `📸 *CURUMA Photo Submission*\n\n` +
-          `*Name:* ${document.getElementById('hiddenName').value}\n` +
-          `*Enrollment:* ${document.getElementById('hiddenEnrollment').value}\n` +
-          `*Department:* ${document.getElementById('hiddenDepartment').value}\n` +
-          `*Phone:* ${document.getElementById('hiddenPhone').value}\n` +
-          `*Category:* ${document.getElementById('hiddenCategory').value}\n` +
-          `*Instagram:* ${document.getElementById('hiddenInstagram').value}\n` +
-          `*Caption:* ${document.getElementById('caption').value}\n` +
-          `*Payment Code:* ${document.getElementById('hiddenPaymentCode').value}\n\n` +
-          `_Photo attached in next message_`;
-
+        // Format WhatsApp message
+        const message = `📸 *CURUMA Photo Contest Submission* 📸\n\n` +
+          `*Contestant Details:*\n` +
+          `👤 Name: ${document.getElementById('hiddenName').value}\n` +
+          `🎓 Enrollment: ${document.getElementById('hiddenEnrollment').value}\n` +
+          `🏛️ Department: ${document.getElementById('hiddenDepartment').value}\n` +
+          `📱 Instagram: @${document.getElementById('hiddenInstagram').value.replace('@', '')}\n\n` +
+          `*Photo Details:*\n` +
+          `✏️ Caption: "${document.getElementById('caption').value}"\n` +
+          `💰 Payment Code: ${document.getElementById('hiddenPaymentCode').value}\n\n` +
+          `_Please find the photo attached in the next message_`;
+        
+        // Encode for URL
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/918547432287?text=${encodedMessage}`;
+        
+        // Submit to server first (optional)
         const formData = new FormData(document.getElementById('uploadForm'));
-
+        
         fetch('/submit', {
           method: 'POST',
           body: formData
-        }).then(response => {
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Server submission failed');
+          // Open WhatsApp after successful server submission
           window.open(whatsappUrl, '_blank');
           document.getElementById('confirmationModal').style.display = 'none';
-        }).catch(error => {
-          console.error('Error submitting to server:', error);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Still open WhatsApp even if server submission fails
           window.open(whatsappUrl, '_blank');
           document.getElementById('confirmationModal').style.display = 'none';
         });

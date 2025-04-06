@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Confirm Submission</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <img src="/Images/curuma_logo.png" alt="CURUMA Logo">
+    <h1>Confirm Your Submission</h1>
+  </header>
+
+  <main>
+    <div class="submission-details">
+      <h2>Registration Details</h2>
+      <div id="registrationDetails"></div>
+      
+      <h2>Photo Entry</h2>
+      <img id="photoPreview" src="" alt="Your submission" style="max-width: 300px;">
+      
+      <h2>Payment Verification</h2>
+      <p>Reference Code: <strong id="paymentCodeDisplay"></strong></p>
+    </div>
+
+    <button id="confirmButton" class="button">Confirm & Submit via WhatsApp</button>
+    <a href="/photo_upload.html" class="button secondary">Go Back</a>
+  </main>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    
+    // Display all registration details
+    const detailsContainer = document.getElementById('registrationDetails');
+    params.forEach((value, key) => {
+      if (key !== 'photoPreview' && key !== 'screenshot') {
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${key}:</strong> ${value}`;
+        detailsContainer.appendChild(div);
+      }
+    });
+
+    // Display photo preview
+    document.getElementById('photoPreview').src = params.get('photoPreview');
+    document.getElementById('paymentCodeDisplay').textContent = params.get('paymentCode');
+
+    // WhatsApp submission
+    document.getElementById('confirmButton').addEventListener('click', function() {
+      const whatsappMessage = formatWhatsAppMessage(params);
+      window.location.href = `https://wa.me/917561868119?text=${encodeURIComponent(whatsappMessage)}`;
+    });
+  });
+
+  function formatWhatsAppMessage(params) {
+    return `📸 CURUMA Photo Submission\n\n` +
+      `*Name:* ${params.get('name')}\n` +
+      `*Enrollment:* ${params.get('enrollment')}\n` +
+      `*Category:* ${params.get('category')}\n` +
+      `*Instagram:* ${params.get('instagram')}\n` +
+      `*Payment Code:* ${params.get('paymentCode')}\n\n` +
+      `*Caption:* ${params.get('caption')}\n\n` +
+      `_Photo attached in next message_`;
+  }
+  </script>
+</body>
+</html>
